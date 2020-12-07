@@ -1,6 +1,7 @@
 # setup-arduino-cli
 
-[![Actions Status](https://github.com/arduino/setup-arduino-cli/workflows/Test%20Action/badge.svg)](https://github.com/arduino/setup-arduino-cli/actions)
+[![Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Test%20Action/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Test+Action)
+[![Spellcheck Status](https://github.com/arduino/arduino-lint-action/workflows/Spell%20Check/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Spell+Check)
 
 This action makes the `arduino-cli` tool available to Workflows.
 
