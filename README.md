@@ -117,29 +117,8 @@ jobs:
       - uses: arduino/arduino-lint-action@v1
 ```
 
-## Development
+## Contributing
 
-To work on the codebase you have to install all the dependencies:
+To report bugs or make feature requests, please submit an issue: https://github.com/arduino/arduino-lint-action/issues
 
-```sh
-# npm install
-```
-
-To run tests set the environment variable `GITHUB_TOKEN` with a valid Personal Access Token and then:
-
-```sh
-# npm run test
-```
-
-See the [official Github documentation][pat-docs] to know more about Personal Access Tokens.
-
-## Release
-
-1. `npm install` to add all the dependencies, included development.
-2. `npm run build` to build the Action under the `./lib` folder.
-3. `npm run test` to see everything works as expected.
-4. `npm run pack` to package for distribution
-5. `git add src dist` to check in the code that matters.
-6. open a PR and request a review.
-
-[pat-docs]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+Pull requests are welcome! Please see the [contribution guidelines](.github/CONTRIBUTING.md) for information.
