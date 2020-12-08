@@ -151,12 +151,12 @@ function fetchVersions() {
         const token = core.getInput("token", { required: true });
         const authHandler = new auth.PersonalAccessTokenCredentialHandler(token);
         let rest = new httpm.HttpClient("setup-arduino-cli", [
-            authHandler
+            authHandler,
         ]);
         let tags = (yield rest.getJson("https://api.github.com/repos/Arduino/arduino-cli/git/refs/tags")).result || [];
         return tags
-            .filter(tag => tag.ref.match(/\d+\.[\w\.]+/g))
-            .map(tag => tag.ref.replace("refs/tags/", ""));
+            .filter((tag) => tag.ref.match(/\d+\.[\w\.]+/g))
+            .map((tag) => tag.ref.replace("refs/tags/", ""));
     });
 }
 // Compute an actual version starting from the `version` configuration param.
@@ -167,12 +167,12 @@ function computeVersion(version) {
             version = version.slice(0, version.length - 2);
         }
         const allVersions = yield fetchVersions();
-        const possibleVersions = allVersions.filter(v => v.startsWith(version));
+        const possibleVersions = allVersions.filter((v) => v.startsWith(version));
         const versionMap = new Map();
-        possibleVersions.forEach(v => versionMap.set(normalizeVersion(v), v));
+        possibleVersions.forEach((v) => versionMap.set(normalizeVersion(v), v));
         const versions = Array.from(versionMap.keys())
             .sort(semver.rcompare)
-            .map(v => versionMap.get(v));
+            .map((v) => versionMap.get(v));
         core.debug(`evaluating ${versions.length} versions`);
         if (versions.length === 0) {
             throw new Error("unable to get latest version");
@@ -193,7 +193,7 @@ function normalizeVersion(version) {
     else {
         // handle beta and rc
         // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
-        if (preStrings.some(el => versionPart[1].includes(el))) {
+        if (preStrings.some((el) => versionPart[1].includes(el))) {
             versionPart[1] = versionPart[1]
                 .replace("beta", ".0-beta")
                 .replace("rc", ".0-rc")
@@ -209,7 +209,7 @@ function normalizeVersion(version) {
     else {
         // handle beta and rc
         // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
-        if (preStrings.some(el => versionPart[2].includes(el))) {
+        if (preStrings.some((el) => versionPart[2].includes(el))) {
             versionPart[2] = versionPart[2]
                 .replace("beta", "-beta")
                 .replace("rc", "-rc")
