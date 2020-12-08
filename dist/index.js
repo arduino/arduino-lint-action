@@ -36,7 +36,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getArduinoCli = void 0;
+exports.getArduinoLint = void 0;
 // Load tempDirectory before it gets wiped by tool-cache
 let tempDirectory = process.env["RUNNER_TEMP"] || "";
 const os = __importStar(__webpack_require__(87));
@@ -65,7 +65,7 @@ const core = __importStar(__webpack_require__(186));
 const tc = __importStar(__webpack_require__(784));
 let osPlat = os.platform();
 let osArch = os.arch();
-function getArduinoCli(version) {
+function getArduinoLint(version) {
     return __awaiter(this, void 0, void 0, function* () {
         // resolve the version number
         const targetVersion = yield computeVersion(version);
@@ -74,21 +74,21 @@ function getArduinoCli(version) {
         }
         // look if the binary is cached
         let toolPath;
-        toolPath = tc.find("arduino-cli", version);
+        toolPath = tc.find("arduino-lint", version);
         // if not: download, extract and cache
         if (!toolPath) {
             toolPath = yield downloadRelease(version);
-            core.debug("CLI cached under " + toolPath);
+            core.debug("arduino-lint cached under " + toolPath);
         }
-        core.addPath(toolPath);
+        core.addPath(`${toolPath}/arduino-lint`);
     });
 }
-exports.getArduinoCli = getArduinoCli;
+exports.getArduinoLint = getArduinoLint;
 function downloadRelease(version) {
     return __awaiter(this, void 0, void 0, function* () {
         // Download
         let fileName = getFileName(version);
-        let downloadUrl = util.format("https://github.com/Arduino/arduino-cli/releases/download/%s/%s", version, fileName);
+        let downloadUrl = util.format("https://github.com/arduino/arduino-lint/releases/download/%s/%s", version, fileName);
         core.debug("Downloading " + downloadUrl);
         let downloadPath = null;
         try {
@@ -108,7 +108,7 @@ function downloadRelease(version) {
             extPath = yield tc.extractTar(downloadPath);
         }
         // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
-        return yield tc.cacheDir(extPath, "arduino-cli", version);
+        return yield tc.cacheDir(extPath, "arduino-lint", version);
     });
 }
 function getFileName(version) {
@@ -143,17 +143,17 @@ function getFileName(version) {
             arch = "ARM64";
             break;
     }
-    return util.format("arduino-cli_%s_%s_%s.%s", version, platform, arch, ext);
+    return util.format("arduino-lint_%s_%s_%s.%s", version, platform, arch, ext);
 }
 // Retrieve a list of versions scraping tags from the Github API
 function fetchVersions() {
     return __awaiter(this, void 0, void 0, function* () {
         const token = core.getInput("token", { required: true });
         const authHandler = new auth.PersonalAccessTokenCredentialHandler(token);
-        let rest = new httpm.HttpClient("setup-arduino-cli", [
+        let rest = new httpm.HttpClient("arduino-lint-action", [
             authHandler,
         ]);
-        let tags = (yield rest.getJson("https://api.github.com/repos/Arduino/arduino-cli/git/refs/tags")).result || [];
+        let tags = (yield rest.getJson("https://api.github.com/repos/arduino/arduino-lint/git/refs/tags")).result || [];
         return tags
             .filter((tag) => tag.ref.match(/\d+\.[\w\.]+/g))
             .map((tag) => tag.ref.replace("refs/tags/", ""));
@@ -258,14 +258,52 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(186));
+const exec = __importStar(__webpack_require__(514));
 const installer = __importStar(__webpack_require__(480));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let version = core.getInput("version");
+            const path = core.getInput("path");
+            const version = core.getInput("version");
+            const compliance = core.getInput("compliance");
+            const libraryManager = core.getInput("library-manager");
+            const projectType = core.getInput("project-type");
+            const recursive = core.getInput("recursive");
+            const reportFile = core.getInput("report-file");
+            const verbose = core.getInput("verbose");
+            const official = core.getInput("official");
             if (version) {
-                yield installer.getArduinoCli(version);
+                yield installer.getArduinoLint(version);
             }
+            const execArgs = [
+                "--compliance",
+                compliance,
+                "--project-type",
+                projectType,
+            ];
+            // Add arguments that don't have default input values only if they are defined.
+            if (libraryManager) {
+                execArgs.push("--library-manager", libraryManager);
+            }
+            if (reportFile) {
+                execArgs.push("--report-file", reportFile);
+            }
+            // Add Boolean flags only if true.
+            if (recursive == "true") {
+                execArgs.push("--recursive");
+            }
+            if (verbose == "true") {
+                execArgs.push("--verbose");
+            }
+            if (path) {
+                execArgs.push(path);
+            }
+            const options = {
+                env: {
+                    ARDUINO_LINT_OFFICIAL: official,
+                },
+            };
+            yield exec.exec("arduino-lint", execArgs, options);
         }
         catch (error) {
             core.setFailed(error.message);
