@@ -14,8 +14,9 @@ async function run() {
     const verbose = core.getInput("verbose");
     const official = core.getInput("official");
 
+    let toolPath = "arduino-lint";
     if (version) {
-      await installer.getArduinoLint(version);
+      toolPath = await installer.getArduinoLint(version);
     }
 
     const execArgs = [
@@ -53,7 +54,7 @@ async function run() {
       },
     };
 
-    await exec.exec("arduino-lint", execArgs, options);
+    await exec.exec(toolPath, execArgs, options);
   } catch (error) {
     core.setFailed(error.message);
   }

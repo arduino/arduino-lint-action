@@ -33,7 +33,7 @@ interface ITaskRef {
   ref: string;
 }
 
-export async function getArduinoLint(version: string) {
+export async function getArduinoLint(version: string): Promise<string> {
   // resolve the version number
   const targetVersion = await computeVersion(version);
   if (targetVersion) {
@@ -50,7 +50,7 @@ export async function getArduinoLint(version: string) {
     core.debug("arduino-lint cached under " + toolPath);
   }
 
-  core.addPath(`${toolPath}/arduino-lint`);
+  return path.join(toolPath, "arduino-lint");
 }
 
 async function downloadRelease(version: string): Promise<string> {

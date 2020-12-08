@@ -43,7 +43,7 @@ describe("installer tests", () => {
   });
 
   it("Downloads version of arduino-lint if no matching version is installed", async () => {
-    await installer.getArduinoLint("0.4.0");
+    const toolPath = await installer.getArduinoLint("0.4.0");
     const bindir = path.join(
       toolDir,
       "arduino-lint",
@@ -52,6 +52,7 @@ describe("installer tests", () => {
       "arduino-lint"
     );
 
+    expect(toolPath == path.join(bindir, "arduino-lint")).toBe(true);
     expect(fs.existsSync(`${bindir}.complete`)).toBe(true);
 
     if (IS_WINDOWS) {

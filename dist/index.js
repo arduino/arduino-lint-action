@@ -80,7 +80,7 @@ function getArduinoLint(version) {
             toolPath = yield downloadRelease(version);
             core.debug("arduino-lint cached under " + toolPath);
         }
-        core.addPath(`${toolPath}/arduino-lint`);
+        return path.join(toolPath, "arduino-lint");
     });
 }
 exports.getArduinoLint = getArduinoLint;
@@ -272,8 +272,9 @@ function run() {
             const reportFile = core.getInput("report-file");
             const verbose = core.getInput("verbose");
             const official = core.getInput("official");
+            let toolPath = "arduino-lint";
             if (version) {
-                yield installer.getArduinoLint(version);
+                toolPath = yield installer.getArduinoLint(version);
             }
             const execArgs = [
                 "--compliance",
@@ -303,7 +304,7 @@ function run() {
                     ARDUINO_LINT_OFFICIAL: official,
                 },
             };
-            yield exec.exec("arduino-lint", execArgs, options);
+            yield exec.exec(toolPath, execArgs, options);
         }
         catch (error) {
             core.setFailed(error.message);
