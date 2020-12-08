@@ -276,6 +276,7 @@ function run() {
             if (version) {
                 toolPath = yield installer.getArduinoLint(version);
             }
+            yield exec.exec(toolPath, ["--version"]); // Display the version of arduino-lint in use.
             const execArgs = [
                 "--compliance",
                 compliance,

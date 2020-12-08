@@ -19,6 +19,8 @@ async function run() {
       toolPath = await installer.getArduinoLint(version);
     }
 
+    await exec.exec(toolPath, ["--version"]); // Display the version of arduino-lint in use.
+
     const execArgs = [
       "--compliance",
       compliance,
