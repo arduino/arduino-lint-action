@@ -1,0 +1,6 @@
+[codespell]
+# In the event of a false positive, add the problematic word, in all lowercase, here:
+ignore-words-list = afterall
+check-filenames =
+check-hidden =
+skip = ./.git,./dist

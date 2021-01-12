@@ -16,11 +16,11 @@ import * as installer from "../src/installer";
 
 // Inputs for mock @actions/core
 let inputs = {
-  token: process.env.GITHUB_TOKEN || ""
+  token: process.env.GITHUB_TOKEN || "",
 } as any;
 
 describe("installer tests", () => {
-  beforeEach(async function() {
+  beforeEach(async function () {
     // Mock getInput
     jest.spyOn(core, "getInput").mockImplementation((name: string) => {
       return inputs[name];
@@ -42,27 +42,28 @@ describe("installer tests", () => {
     jest.restoreAllMocks();
   });
 
-  it("Downloads version of Arduino CLI if no matching version is installed", async () => {
-    await installer.getArduinoCli("0.4.0");
-    const bindir = path.join(toolDir, "arduino-cli", "0.4.0", os.arch());
+  it("Downloads version of arduino-lint if no matching version is installed", async () => {
+    const toolPath = await installer.getArduinoLint("1.0.0");
+    const bindir = path.join(toolDir, "arduino-lint", "1.0.0", os.arch());
 
+    expect(toolPath == path.join(bindir, "arduino-lint")).toBe(true);
     expect(fs.existsSync(`${bindir}.complete`)).toBe(true);
 
     if (IS_WINDOWS) {
-      expect(fs.existsSync(path.join(bindir, "arduino-cli.exe"))).toBe(true);
+      expect(fs.existsSync(path.join(bindir, "arduino-lint.exe"))).toBe(true);
     } else {
-      expect(fs.existsSync(path.join(bindir, "arduino-cli"))).toBe(true);
+      expect(fs.existsSync(path.join(bindir, "arduino-lint"))).toBe(true);
     }
   }, 20000);
 
-  describe("Gets the latest release of Arduino CLI", () => {
+  describe("Gets the latest release of arduino-lint", () => {
     beforeEach(() => {
       jest.spyOn(core, "getInput").mockImplementation((name: string) => {
         return inputs[name];
       });
 
       nock("https://api.github.com")
-        .get("/repos/Arduino/arduino-cli/git/refs/tags")
+        .get("/repos/arduino/arduino-lint/git/refs/tags")
         .replyWithFile(200, path.join(dataDir, "tags.json"));
     });
 
@@ -72,27 +73,27 @@ describe("installer tests", () => {
       jest.clearAllMocks();
     });
 
-    it("Gets the latest version of Arduino CLI 0.4.0 using 0.4 and no matching version is installed", async () => {
-      await installer.getArduinoCli("0.4");
-      const bindir = path.join(toolDir, "arduino-cli", "0.4.0", os.arch());
+    it("Gets the latest version of arduino-lint 1.0.0 using 1.0 and no matching version is installed", async () => {
+      await installer.getArduinoLint("1.0");
+      const bindir = path.join(toolDir, "arduino-lint", "1.0.0", os.arch());
 
       expect(fs.existsSync(`${bindir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
-        expect(fs.existsSync(path.join(bindir, "arduino-cli.exe"))).toBe(true);
+        expect(fs.existsSync(path.join(bindir, "arduino-lint.exe"))).toBe(true);
       } else {
-        expect(fs.existsSync(path.join(bindir, "arduino-cli"))).toBe(true);
+        expect(fs.existsSync(path.join(bindir, "arduino-lint"))).toBe(true);
       }
     }, 20000);
 
-    it("Gets latest version of Task using 0.x and no matching version is installed", async () => {
-      await installer.getArduinoCli("0.x");
-      const bindir = path.join(toolDir, "arduino-cli", "0.5.0", os.arch());
+    it("Gets latest version of the 1 major series using 1.x and no matching version is installed", async () => {
+      await installer.getArduinoLint("1.x");
+      const bindir = path.join(toolDir, "arduino-lint", "1.0.0", os.arch());
 
       expect(fs.existsSync(`${bindir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
-        expect(fs.existsSync(path.join(bindir, "arduino-cli.exe"))).toBe(true);
+        expect(fs.existsSync(path.join(bindir, "arduino-lint.exe"))).toBe(true);
       } else {
-        expect(fs.existsSync(path.join(bindir, "arduino-cli"))).toBe(true);
+        expect(fs.existsSync(path.join(bindir, "arduino-lint"))).toBe(true);
       }
     }, 20000);
   });

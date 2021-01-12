@@ -33,7 +33,7 @@ interface ITaskRef {
   ref: string;
 }
 
-export async function getArduinoCli(version: string) {
+export async function getArduinoLint(version: string): Promise<string> {
   // resolve the version number
   const targetVersion = await computeVersion(version);
   if (targetVersion) {
@@ -42,22 +42,22 @@ export async function getArduinoCli(version: string) {
 
   // look if the binary is cached
   let toolPath: string;
-  toolPath = tc.find("arduino-cli", version);
+  toolPath = tc.find("arduino-lint", version);
 
   // if not: download, extract and cache
   if (!toolPath) {
     toolPath = await downloadRelease(version);
-    core.debug("CLI cached under " + toolPath);
+    core.debug("arduino-lint cached under " + toolPath);
   }
 
-  core.addPath(toolPath);
+  return path.join(toolPath, "arduino-lint");
 }
 
 async function downloadRelease(version: string): Promise<string> {
   // Download
   let fileName: string = getFileName(version);
   let downloadUrl: string = util.format(
-    "https://github.com/Arduino/arduino-cli/releases/download/%s/%s",
+    "https://github.com/arduino/arduino-lint/releases/download/%s/%s",
     version,
     fileName
   );
@@ -80,7 +80,7 @@ async function downloadRelease(version: string): Promise<string> {
   }
 
   // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
-  return await tc.cacheDir(extPath, "arduino-cli", version);
+  return await tc.cacheDir(extPath, "arduino-lint", version);
 }
 
 function getFileName(version: string): string {
@@ -117,26 +117,26 @@ function getFileName(version: string): string {
       break;
   }
 
-  return util.format("arduino-cli_%s_%s_%s.%s", version, platform, arch, ext);
+  return util.format("arduino-lint_%s_%s_%s.%s", version, platform, arch, ext);
 }
 
 // Retrieve a list of versions scraping tags from the Github API
 async function fetchVersions(): Promise<string[]> {
   const token: string = core.getInput("token", { required: true });
   const authHandler = new auth.PersonalAccessTokenCredentialHandler(token);
-  let rest: httpm.HttpClient = new httpm.HttpClient("setup-arduino-cli", [
-    authHandler
+  let rest: httpm.HttpClient = new httpm.HttpClient("arduino-lint-action", [
+    authHandler,
   ]);
   let tags: ITaskRef[] =
     (
       await rest.getJson<ITaskRef[]>(
-        "https://api.github.com/repos/Arduino/arduino-cli/git/refs/tags"
+        "https://api.github.com/repos/arduino/arduino-lint/git/refs/tags"
       )
     ).result || [];
 
   return tags
-    .filter(tag => tag.ref.match(/\d+\.[\w\.]+/g))
-    .map(tag => tag.ref.replace("refs/tags/", ""));
+    .filter((tag) => tag.ref.match(/\d+\.[\w\.]+/g))
+    .map((tag) => tag.ref.replace("refs/tags/", ""));
 }
 
 // Compute an actual version starting from the `version` configuration param.
@@ -147,14 +147,14 @@ async function computeVersion(version: string): Promise<string> {
   }
 
   const allVersions = await fetchVersions();
-  const possibleVersions = allVersions.filter(v => v.startsWith(version));
+  const possibleVersions = allVersions.filter((v) => v.startsWith(version));
 
   const versionMap = new Map();
-  possibleVersions.forEach(v => versionMap.set(normalizeVersion(v), v));
+  possibleVersions.forEach((v) => versionMap.set(normalizeVersion(v), v));
 
   const versions = Array.from(versionMap.keys())
     .sort(semver.rcompare)
-    .map(v => versionMap.get(v));
+    .map((v) => versionMap.get(v));
 
   core.debug(`evaluating ${versions.length} versions`);
 
@@ -179,7 +179,7 @@ function normalizeVersion(version: string): string {
   } else {
     // handle beta and rc
     // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
-    if (preStrings.some(el => versionPart[1].includes(el))) {
+    if (preStrings.some((el) => versionPart[1].includes(el))) {
       versionPart[1] = versionPart[1]
         .replace("beta", ".0-beta")
         .replace("rc", ".0-rc")
@@ -195,7 +195,7 @@ function normalizeVersion(version: string): string {
   } else {
     // handle beta and rc
     // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
-    if (preStrings.some(el => versionPart[2].includes(el))) {
+    if (preStrings.some((el) => versionPart[2].includes(el))) {
       versionPart[2] = versionPart[2]
         .replace("beta", "-beta")
         .replace("rc", "-rc")

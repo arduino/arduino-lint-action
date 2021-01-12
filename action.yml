@@ -1,17 +1,47 @@
-name: "Setup Arduino CLI"
-description: "Download Arduino CLI and add it to the PATH"
+name: "arduino/arduino-lint-action"
+description: "Check Arduino projects for problems."
 author: "Arduino"
 inputs:
+  path:
+    description: "Path containing Arduino projects."
+    required: false
   version:
-    description: "Version to use. Example: 0.5.0"
-    default: "0.x"
+    description: "Version of the Arduino Lint tool to use."
+    required: false
+    default: "1.x"
+  compliance:
+    description: "How strict the checks are."
+    required: false
+    default: "specification"
+  library-manager:
+    description: "Configuration of the checks for libraries in the Arduino Library Manager index."
+    required: false
+  project-type:
+    description: "The type of project to check."
+    required: false
+    default: "all"
+  recursive:
+    description: "Search path recursively for projects to check."
+    required: false
+    default: "false"
+  report-file:
+    description: "Save a JSON formatted report on the checks to this file."
+    required: false
+  verbose:
+    description: "Show more information on the checks being run."
+    required: false
+    default: "false"
+  official:
+    description: "Run the checks that only apply to official Arduino projects."
+    required: false
+    default: "false"
   token:
-    description: "Personal access token (PAT) used to call the Github API."
+    description: "GitHub access token used to get information from the GitHub API."
     required: false
     default: ${{ github.token }}
 runs:
   using: "node12"
   main: "dist/index.js"
 branding:
-  icon: "box"
+  icon: "check-square"
   color: "green"

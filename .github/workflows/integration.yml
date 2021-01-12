@@ -1,0 +1,92 @@
+name: Integration Tests
+
+on:
+  pull_request:
+  push:
+  schedule: # Scheduled trigger checks for breakage caused by changes to arduino-lint
+    # run every Tuesday at 3 AM UTC
+    - cron: "0 3 * * 2"
+  # workflow_dispatch event allows the workflow to be triggered manually
+  # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+  # repository_dispatch event allows the workflow to be triggered via the GitHub API
+  # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#repository_dispatch
+  repository_dispatch:
+
+jobs:
+  defaults:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Build action
+        run: |
+          npm install
+          npm run build
+          npm run pack
+
+      # Run the action using default values as much as possible.
+      - name: Run action
+        uses: ./ # Use the action from the local path.
+        with:
+          path: .github/workflows/testdata/SpecificationSketch
+
+  expected-pass:
+    runs-on: ubuntu-latest
+
+    env:
+      REPORT_FILE_PATH: /tmp/report.json
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Build action
+        run: |
+          npm install
+          npm run build
+          npm run pack
+
+      # The contents of the test data path are structured so that the step will fail if arduino-lint is not run with the configuration according to these inputs.
+      - name: Run action
+        uses: ./
+        with:
+          path: .github/workflows/testdata/some-projects
+          compliance: permissive
+          library-manager: false
+          project-type: library
+          recursive: true
+          report-file: ${{ env.REPORT_FILE_PATH }}
+          official: true
+
+      - name: Verify report file exists
+        run: |
+          [ -e "${{ env.REPORT_FILE_PATH }}" ]
+
+  expected-fail:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Build action
+        run: |
+          npm install
+          npm run build
+          npm run pack
+
+      # The contents of the test data path are structured so that the step will fail if arduino-lint is run with the default configuration.
+      - name: Run action
+        id: arduino-lint
+        continue-on-error: true
+        uses: ./
+        with:
+          path: .github/workflows/testdata/projects
+
+      - name: Fail the job if the action run succeeded
+        if: steps.arduino-lint.outcome == 'success'
+        run: |
+          echo "::error::The action run was expected to fail, but passed!"
+          exit 1

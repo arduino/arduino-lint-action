@@ -1,6 +1,8 @@
 name: Test Action
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
@@ -11,14 +13,19 @@ jobs:
 
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest]
+        operating-system:
+          - ubuntu-latest
+          - windows-latest
 
     steps:
+      - name: Disable EOL conversions
+        run: git config --global core.autocrlf false
+
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Set Node.js 10.x
-        uses: actions/setup-node@v1.4.4
+        uses: actions/setup-node@v1
         with:
           node-version: 10.x
 
