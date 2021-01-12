@@ -18,6 +18,9 @@ jobs:
           - windows-latest
 
     steps:
+      - name: Disable EOL conversions
+        run: git config --global core.autocrlf false
+
       - name: Checkout
         uses: actions/checkout@master
 
