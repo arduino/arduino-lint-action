@@ -43,14 +43,8 @@ describe("installer tests", () => {
   });
 
   it("Downloads version of arduino-lint if no matching version is installed", async () => {
-    const toolPath = await installer.getArduinoLint("0.4.0");
-    const bindir = path.join(
-      toolDir,
-      "arduino-lint",
-      "0.4.0",
-      os.arch(),
-      "arduino-lint"
-    );
+    const toolPath = await installer.getArduinoLint("1.0.0");
+    const bindir = path.join(toolDir, "arduino-lint", "1.0.0", os.arch());
 
     expect(toolPath == path.join(bindir, "arduino-lint")).toBe(true);
     expect(fs.existsSync(`${bindir}.complete`)).toBe(true);
@@ -79,9 +73,9 @@ describe("installer tests", () => {
       jest.clearAllMocks();
     });
 
-    it("Gets the latest version of arduino-lint 0.4.0 using 0.4 and no matching version is installed", async () => {
-      await installer.getArduinoLint("0.4");
-      const bindir = path.join(toolDir, "arduino-lint", "0.4.0", os.arch());
+    it("Gets the latest version of arduino-lint 1.0.0 using 1.0 and no matching version is installed", async () => {
+      await installer.getArduinoLint("1.0");
+      const bindir = path.join(toolDir, "arduino-lint", "1.0.0", os.arch());
 
       expect(fs.existsSync(`${bindir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
@@ -91,9 +85,9 @@ describe("installer tests", () => {
       }
     }, 20000);
 
-    it("Gets latest version of the 0 major series using 0.x and no matching version is installed", async () => {
-      await installer.getArduinoLint("0.x");
-      const bindir = path.join(toolDir, "arduino-lint", "0.5.0", os.arch());
+    it("Gets latest version of the 1 major series using 1.x and no matching version is installed", async () => {
+      await installer.getArduinoLint("1.x");
+      const bindir = path.join(toolDir, "arduino-lint", "1.0.0", os.arch());
 
       expect(fs.existsSync(`${bindir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
