@@ -117,6 +117,21 @@ jobs:
       - uses: arduino/arduino-lint-action@v1
 ```
 
+A more complex workflow which passes two inputs to run the default checks on the projects in the repository but with permissive compliance and a complete output:
+
+```yaml
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: arduino/arduino-lint-action@v1
+        with: 
+          verbose: true
+          compliance: permissive
+```
+
 ## Contributing
 
 To report bugs or make feature requests, please submit an issue: https://github.com/arduino/arduino-lint-action/issues
