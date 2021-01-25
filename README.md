@@ -117,7 +117,7 @@ jobs:
       - uses: arduino/arduino-lint-action@v1
 ```
 
-A more complex workflow which passes two inputs to run the default checks on the projects in the repository but with permissive compliance and a complete output:
+A more complex workflow which uses [inputs](#inputs) to configure the action for Library Manager ["update" mode](#library-manager) and strict compliance:
 
 ```yaml
 on: [push, pull_request]
@@ -127,9 +127,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: arduino/arduino-lint-action@v1
-        with: 
-          verbose: true
-          compliance: permissive
+        with:
+          library-manager: update
+          compliance: strict
 ```
 
 ## Contributing
