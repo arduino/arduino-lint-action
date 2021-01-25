@@ -117,6 +117,21 @@ jobs:
       - uses: arduino/arduino-lint-action@v1
 ```
 
+A more complex workflow which uses [inputs](#inputs) to configure the action for Library Manager ["update" mode](#library-manager) and strict compliance:
+
+```yaml
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: arduino/arduino-lint-action@v1
+        with:
+          library-manager: update
+          compliance: strict
+```
+
 ## Contributing
 
 To report bugs or make feature requests, please submit an issue: https://github.com/arduino/arduino-lint-action/issues
