@@ -20,13 +20,14 @@ projects:
   - [`path`](#path)
   - [`version`](#version)
   - [`compliance`](#compliance)
-  - [`format`](#format)
   - [`library-manager`](#library-manager)
   - [`project-type`](#project-type)
   - [`recursive`](#recursive)
   - [`report-file`](#report-file)
+  - [`verbose`](#verbose)
   - [`token`](#token)
 - [Usage](#usage)
+- [Contributing](#contributing)
 
 <!-- tocstop -->
 
