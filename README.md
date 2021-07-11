@@ -65,7 +65,7 @@ Configure the checks for libraries in the [Arduino Library Manager](https://gith
 #### Supported values
 
 - `submit` - Also run additional checks required to pass before a library is accepted for inclusion in the index.
-- `update`- Also run additional checks required to pass before a library is accepted for inclusion in the index.
+- `update`- Also run additional checks required to pass before an update to a library is accepted.
 - `false` - Don't run any Library Manager-specific checks.
 
 **Default**: `submit` for libraries, `false` for other project types
