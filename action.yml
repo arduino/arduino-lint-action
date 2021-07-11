@@ -32,7 +32,7 @@ inputs:
     required: false
     default: "false"
   official:
-    description: "Run the checks that only apply to official Arduino projects."
+    description: "Run the checks that only apply to official (non 3rd party) Arduino projects."
     required: false
     default: "false"
   token:
