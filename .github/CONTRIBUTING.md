@@ -28,4 +28,4 @@ See the [official Github documentation][pat-docs] to learn more about Personal A
 1. After the release, rebase the release branch for that major version (e.g., `v1` branch for the v1.x.x tags) on the
    tag. If no branch exists for the release's major version, create one.
 
-[pat-docs]: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
+[pat-docs]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token

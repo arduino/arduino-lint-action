@@ -105,7 +105,7 @@ Set to `true` to show more information in the log about the checks being run.
 
 GitHub access token used to get information from the GitHub API.
 
-**Default**: [`GITHUB_TOKEN`](https://docs.github.com/en/free-pro-team@latest/actions/reference/authentication-in-a-workflow)
+**Default**: [`GITHUB_TOKEN`](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
 
 ## Usage
 
