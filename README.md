@@ -61,7 +61,7 @@ Configure how strict the tool is about which checks are considered errors vs war
 
 ### `library-manager`
 
-Configure the checks for libraries in the [Arduino Library Manager](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ) index.
+Configure the checks for libraries in the [Arduino Library Manager](https://github.com/arduino/library-registry/blob/main/FAQ.md#readme) index.
 
 #### Supported values
 
