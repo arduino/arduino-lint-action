@@ -11,6 +11,7 @@ projects:
 - Libraries
 - Sketches
 - Boards platforms
+- Boards Manager package indexes
 
 ## Table of contents
 
@@ -78,6 +79,8 @@ Configures which types of projects to check, along with their subprojects.
 
 - `sketch`
 - `library`
+- `platform` - [boards platform](https://arduino.github.io/arduino-cli/latest/platform-specification/)
+- `package-index` - Boards Manager [package index](https://arduino.github.io/arduino-cli/latest/package_index_json-specification/)
 - `all` - Run checks on any type of project that is detected
 
 **Default**: `all`
