@@ -11,6 +11,7 @@ projects:
 - Libraries
 - Sketches
 - Boards platforms
+- Boards Manager package indexes
 
 ## Table of contents
 
@@ -60,7 +61,7 @@ Configure how strict the tool is about which checks are considered errors vs war
 
 ### `library-manager`
 
-Configure the checks for libraries in the [Arduino Library Manager](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ) index.
+Configure the checks for libraries in the [Arduino Library Manager](https://github.com/arduino/library-registry/blob/main/FAQ.md#readme) index.
 
 #### Supported values
 
@@ -78,6 +79,8 @@ Configures which types of projects to check, along with their subprojects.
 
 - `sketch`
 - `library`
+- `platform` - [boards platform](https://arduino.github.io/arduino-cli/latest/platform-specification/)
+- `package-index` - Boards Manager [package index](https://arduino.github.io/arduino-cli/latest/package_index_json-specification/)
 - `all` - Run checks on any type of project that is detected
 
 **Default**: `all`
@@ -102,7 +105,7 @@ Set to `true` to show more information in the log about the checks being run.
 
 GitHub access token used to get information from the GitHub API.
 
-**Default**: [`GITHUB_TOKEN`](https://docs.github.com/en/free-pro-team@latest/actions/reference/authentication-in-a-workflow)
+**Default**: [`GITHUB_TOKEN`](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
 
 ## Usage
 
