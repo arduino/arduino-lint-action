@@ -21,12 +21,6 @@ jobs:
       - name: Checkout local repository
         uses: actions/checkout@v2
 
-      - name: Build action
-        run: |
-          npm install
-          npm run build
-          npm run pack
-
       # Run the action using default values as much as possible.
       - name: Run action
         uses: ./ # Use the action from the local path.
