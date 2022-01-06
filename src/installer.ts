@@ -67,7 +67,9 @@ async function downloadRelease(version: string): Promise<string> {
     const token: string = core.getInput("token", { required: true });
     downloadPath = await tc.downloadTool(downloadUrl, undefined, token);
   } catch (error) {
-    core.debug(error);
+    if (typeof error === "string" || error instanceof Error) {
+      core.debug(error.toString());
+    }
     throw `Failed to download version ${version}: ${error}`;
   }
 
