@@ -22,7 +22,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -96,7 +96,9 @@ function downloadRelease(version) {
             downloadPath = yield tc.downloadTool(downloadUrl, undefined, token);
         }
         catch (error) {
-            core.debug(error);
+            if (typeof error === "string" || error instanceof Error) {
+                core.debug(error.toString());
+            }
             throw `Failed to download version ${version}: ${error}`;
         }
         // Extract
@@ -243,7 +245,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -302,13 +304,18 @@ function run() {
             }
             const options = {
                 env: {
-                    ARDUINO_LINT_OFFICIAL: official,
+                    ARDUINO_LINT_OFFICIAL: official, // The official mode is set via an environment variable.
                 },
             };
             yield exec.exec(toolPath, execArgs, options);
         }
         catch (error) {
-            core.setFailed(error.message);
+            if (error instanceof Error) {
+                core.setFailed(error.message);
+            }
+            else {
+                throw error;
+            }
         }
     });
 }
