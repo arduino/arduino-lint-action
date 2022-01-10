@@ -2,6 +2,7 @@
 
 [![Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Test%20Action/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Test+Action)
 [![Integration Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Integration%20Tests/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Integration+Tests)
+[![Check Packaging status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml)
 [![Spellcheck Status](https://github.com/arduino/arduino-lint-action/workflows/Spell%20Check/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Spell+Check)
 
 [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) action that uses
