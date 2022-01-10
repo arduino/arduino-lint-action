@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@actions/io": "^1.0.2",
-    "@types/jest": "^24.0.13",
+    "@types/jest": "^27.4.0",
     "@types/node": "^12.19.8",
     "@types/semver": "^6.2.2",
     "@vercel/ncc": "^0.33.1",
