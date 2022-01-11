@@ -9,6 +9,8 @@
 Follow the installation instructions here:<br />
 https://nodejs.dev/download
 
+Node.js 16.x is used for development of this project. [nvm](https://github.com/nvm-sh/nvm) is recommended to easily switch between Node.js versions.
+
 ### 2. Install dependencies
 
 To work on the codebase you have to install all the dependencies:
