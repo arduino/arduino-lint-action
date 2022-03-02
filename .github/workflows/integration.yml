@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout local repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Run the action using default values as much as possible.
       - name: Run action
@@ -34,7 +34,7 @@ jobs:
       REPORT_FILE_PATH: /tmp/report.json
     steps:
       - name: Checkout local repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # The contents of the test data path are structured so that the step will fail if arduino-lint is not run with the configuration according to these inputs.
       - name: Run action
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout local repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # The contents of the test data path are structured so that the step will fail if arduino-lint is run with the default configuration.
       - name: Run action
