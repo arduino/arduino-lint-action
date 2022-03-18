@@ -29,7 +29,7 @@
     "semver": "^7.3.5"
   },
   "devDependencies": {
-    "@actions/io": "^1.1.1",
+    "@actions/io": "^1.1.2",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.26",
     "@types/semver": "^7.3.9",
