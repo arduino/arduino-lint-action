@@ -1,6 +1,5 @@
 {
   "name": "arduino-lint-action",
-  "version": "1.0.0",
   "private": true,
   "description": "Check Arduino projects for problems",
   "main": "lib/main.js",
