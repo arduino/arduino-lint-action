@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.8.1",
-    "@actions/http-client": "^1.0.11",
+    "@actions/http-client": "^2.0.0",
     "@actions/tool-cache": "^2.0.0",
     "semver": "^7.3.7"
   },
