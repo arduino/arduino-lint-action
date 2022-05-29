@@ -5,7 +5,7 @@ import * as os from "os";
 import * as path from "path";
 import * as util from "util";
 import * as httpm from "@actions/http-client";
-import * as auth from "@actions/http-client/auth";
+import * as auth from "@actions/http-client/lib/auth";
 import * as semver from "semver";
 
 if (!tempDirectory) {
