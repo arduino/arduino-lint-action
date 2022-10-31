@@ -74,6 +74,16 @@ jobs:
 
       # This schema is referenced by the package.json schema, so must also be accessible.
       - name: Download JSON schema for Prettier configuration file
+        id: download-npm-badges-schema
+        uses: carlosperate/download-file-action@v2
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/npm-badges.json
+          file-url: https://json.schemastore.org/npm-badges.json
+          location: ${{ runner.temp }}/json-schema
+          file-name: npm-badges-schema.json
+
+      # This schema is referenced by the package.json schema, so must also be accessible.
+      - name: Download JSON schema for Prettier configuration file
         id: download-prettierrc-schema
         uses: carlosperate/download-file-action@v2
         with:
@@ -114,6 +124,7 @@ jobs:
             -r "${{ steps.download-ava-schema.outputs.file-path }}" \
             -r "${{ steps.download-eslintrc-schema.outputs.file-path }}" \
             -r "${{ steps.download-jscpd-schema.outputs.file-path }}" \
+            -r "${{ steps.download-npm-badges-schema.outputs.file-path }}" \
             -r "${{ steps.download-prettierrc-schema.outputs.file-path }}" \
             -r "${{ steps.download-semantic-release-schema.outputs.file-path }}" \
             -r "${{ steps.download-stylelintrc-schema.outputs.file-path }}" \
