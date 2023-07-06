@@ -59,7 +59,7 @@ async function downloadRelease(version: string): Promise<string> {
   let downloadUrl: string = util.format(
     "https://github.com/arduino/arduino-lint/releases/download/%s/%s",
     version,
-    fileName
+    fileName,
   );
   core.debug("Downloading " + downloadUrl);
   let downloadPath: string | null = null;
@@ -132,7 +132,7 @@ async function fetchVersions(): Promise<string[]> {
   let tags: ITaskRef[] =
     (
       await rest.getJson<ITaskRef[]>(
-        "https://api.github.com/repos/arduino/arduino-lint/git/refs/tags"
+        "https://api.github.com/repos/arduino/arduino-lint/git/refs/tags",
       )
     ).result || [];
 
