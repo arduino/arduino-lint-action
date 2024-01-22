@@ -83,6 +83,16 @@ jobs:
           file-name: npm-badges-schema.json
 
       # This schema is referenced by the package.json schema, so must also be accessible.
+      - name: Download JSON schema for ESLint plugins
+        id: download-partial-eslint-plugins-schema
+        uses: carlosperate/download-file-action@v2
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/partial-eslint-plugins.json
+          file-url: https://json.schemastore.org/partial-eslint-plugins.json
+          location: ${{ runner.temp }}/json-schema
+          file-name: partial-eslint-plugins.json
+
+      # This schema is referenced by the package.json schema, so must also be accessible.
       - name: Download JSON schema for Prettier configuration file
         id: download-prettierrc-schema
         uses: carlosperate/download-file-action@v2
@@ -125,6 +135,7 @@ jobs:
             -r "${{ steps.download-eslintrc-schema.outputs.file-path }}" \
             -r "${{ steps.download-jscpd-schema.outputs.file-path }}" \
             -r "${{ steps.download-npm-badges-schema.outputs.file-path }}" \
+            -r "${{ steps.download-partial-eslint-plugins-schema.outputs.file-path }}" \
             -r "${{ steps.download-prettierrc-schema.outputs.file-path }}" \
             -r "${{ steps.download-semantic-release-schema.outputs.file-path }}" \
             -r "${{ steps.download-stylelintrc-schema.outputs.file-path }}" \
