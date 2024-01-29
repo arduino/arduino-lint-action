@@ -53,6 +53,16 @@ jobs:
           file-name: ava.json
 
       # This schema is referenced by the package.json schema, so must also be accessible.
+      - name: Download base JSON schema
+        id: download-base-schema
+        uses: carlosperate/download-file-action@v2
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/base.json
+          file-url: https://json.schemastore.org/base.json
+          location: ${{ runner.temp }}/json-schema
+          file-name: base.json
+
+      # This schema is referenced by the package.json schema, so must also be accessible.
       - name: Download JSON schema for eslintrc.json
         id: download-eslintrc-schema
         uses: carlosperate/download-file-action@v2
@@ -132,6 +142,7 @@ jobs:
           ajv validate \
             -s "${{ steps.download-schema.outputs.file-path }}" \
             -r "${{ steps.download-ava-schema.outputs.file-path }}" \
+            -r "${{ steps.download-base-schema.outputs.file-path }}" \
             -r "${{ steps.download-eslintrc-schema.outputs.file-path }}" \
             -r "${{ steps.download-jscpd-schema.outputs.file-path }}" \
             -r "${{ steps.download-npm-badges-schema.outputs.file-path }}" \
