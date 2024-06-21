@@ -39,7 +39,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getArduinoLint = void 0;
+exports.getArduinoLint = getArduinoLint;
 // Load tempDirectory before it gets wiped by tool-cache
 let tempDirectory = process.env["RUNNER_TEMP"] || "";
 const os = __importStar(__nccwpck_require__(2037));
@@ -86,7 +86,6 @@ function getArduinoLint(version) {
         return path.join(toolPath, "arduino-lint");
     });
 }
-exports.getArduinoLint = getArduinoLint;
 function downloadRelease(version) {
     return __awaiter(this, void 0, void 0, function* () {
         // Download
