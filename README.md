@@ -115,6 +115,7 @@ GitHub access token used to get information from the GitHub API.
 The minimal workflow to run the default checks on the projects in the repository:
 
 ```yaml
+name: arduino-lint
 on: [push, pull_request]
 jobs:
   lint:
@@ -127,6 +128,7 @@ jobs:
 A more complex workflow which uses [inputs](#inputs) to configure the action for Library Manager ["update" mode](#library-manager) and strict compliance:
 
 ```yaml
+name: arduino-lint
 on: [push, pull_request]
 jobs:
   lint:
