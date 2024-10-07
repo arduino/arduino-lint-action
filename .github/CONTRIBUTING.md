@@ -54,11 +54,10 @@ See the [official Github documentation][pat-docs] to learn more about Personal A
 
 ### 6. Build
 
-It is necessary to compile the code before it can be used by GitHub Actions. Remember to run these commands before committing any code changes:
+It is necessary to compile the code before it can be used by GitHub Actions. Remember to run this commands before committing any code changes:
 
 ```
-npm run build
-npm run pack
+task build
 ```
 
 ### 7. Commit

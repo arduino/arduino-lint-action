@@ -4,8 +4,6 @@
   "description": "Check Arduino projects for problems",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",
-    "pack": "ncc build",
     "test": "jest"
   },
   "repository": {

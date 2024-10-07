@@ -35,13 +35,14 @@ jobs:
         with:
           node-version-file: package.json
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
 
-      - name: Build project
-        run: |
-          npm run-script build
-          npm run-script pack
+      - name: Build action
+        run: task ts:build
 
       - name: Check packaging
         # Ignoring CR because ncc's output has a mixture of line endings, while the repository should only contain

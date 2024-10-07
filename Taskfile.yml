@@ -6,6 +6,11 @@ vars:
   DEFAULT_NPM_PROJECT_PATH: ./
 
 tasks:
+  build:
+    desc: Build the project
+    deps:
+      - task: ts:build
+
   check:
     desc: Check for problems with the project
     deps:
@@ -16,6 +21,7 @@ tasks:
     deps:
       - task: general:format-prettier
       - task: npm:install-deps
+      - task: ts:build
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
   general:format-prettier:
@@ -116,6 +122,14 @@ tasks:
             -r "{{.SEMANTIC_RELEASE_SCHEMA_PATH}}" \
             -r "{{.STYLELINTRC_SCHEMA_PATH}}" \
             -d "{{.INSTANCE_PATH}}"
+
+  ts:build:
+    desc: Build the action's TypeScript code.
+    deps:
+      - task: npm:install-deps
+    cmds:
+      - npx tsc
+      - npx ncc build
 
   # Make a temporary file named according to the passed TEMPLATE variable and print the path passed to stdout
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
