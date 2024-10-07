@@ -53,7 +53,7 @@ task general:format-prettier
 To run tests set the environment variable `GITHUB_TOKEN` with a valid Personal Access Token and then:
 
 ```
-npm run test
+task js:test
 ```
 
 See the [official Github documentation][pat-docs] to learn more about Personal Access Tokens.

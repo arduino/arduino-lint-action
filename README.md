@@ -1,6 +1,6 @@
 # `arduino/arduino-lint-action`
 
-[![Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Test%20Action/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Test+Action)
+[![Tests Status](https://github.com/arduino/arduino-lint-action/actions/workflows/test-javascript-jest-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/test-javascript-jest-task.yml)
 [![Integration Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Integration%20Tests/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Integration+Tests)
 [![Check Packaging status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml)
 [![Check Prettier Formatting status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml)

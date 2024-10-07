@@ -17,6 +17,7 @@ tasks:
     desc: Check for problems with the project
     deps:
       - task: general:check-spelling
+      - task: js:test
       - task: npm:validate
       - task: ts:validate
         vars:
@@ -62,6 +63,23 @@ tasks:
       - task: npm:install-deps
     cmds:
       - npx prettier --write .
+
+  js:test:
+    desc: |
+      Test the project's JavaScript/TypeScript code.
+      Environment variable parameters:
+      PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
+    deps:
+      - task: npm:install-deps
+    dir: |
+      "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
+    cmds:
+      # See: https://jestjs.io/docs/ecmascript-modules#:~:text=Execute%20node%20with%20%2D%2Dexperimental%2Dvm%2Dmodules
+      - |
+        NODE_OPTIONS="$NODE_OPTIONS --experimental-vm-modules" \
+        npx \
+          jest \
+            --coverage
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-toc-task/Taskfile.yml
   markdown:toc:
