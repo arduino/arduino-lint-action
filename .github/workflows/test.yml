@@ -1,9 +1,5 @@
 name: Test Action
 
-env:
-  # See: https://github.com/actions/setup-node/#readme
-  NODE_VERSION: 20.x
-
 on:
   push:
   pull_request:
@@ -31,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: package.json
 
       - name: npm install
         run: npm install
