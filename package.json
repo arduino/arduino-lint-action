@@ -3,13 +3,6 @@
   "private": true,
   "description": "Check Arduino projects for problems",
   "main": "lib/main.js",
-  "scripts": {
-    "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "pack": "ncc build",
-    "test": "jest"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arduino/arduino-lint-action.git"
@@ -33,8 +26,12 @@
     "@types/node": "^20.16.10",
     "@types/semver": "^7.5.8",
     "@vercel/ncc": "^0.38.2",
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^3.0.1",
+    "github-label-sync": "2.3.1",
     "jest": "^28.1.3",
     "jest-circus": "^29.7.0",
+    "markdown-toc": "^1.2.0",
     "nock": "^13.5.5",
     "prettier": "^3.3.3",
     "ts-jest": "^28.0.8",

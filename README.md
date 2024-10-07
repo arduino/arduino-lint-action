@@ -1,11 +1,12 @@
 # `arduino/arduino-lint-action`
 
-[![Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Test%20Action/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Test+Action)
+[![Tests Status](https://github.com/arduino/arduino-lint-action/actions/workflows/test-javascript-jest-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/test-javascript-jest-task.yml)
 [![Integration Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Integration%20Tests/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Integration+Tests)
 [![Check Packaging status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml)
-[![Check TypeScript Configuration status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig.yml)
-[![Check npm status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm.yml)
-[![Spellcheck Status](https://github.com/arduino/arduino-lint-action/workflows/Spell%20Check/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Spell+Check)
+[![Check Prettier Formatting status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml)
+[![Check TypeScript Configuration status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig-task.yml)
+[![Check npm status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml)
+[![Spell Check status](https://github.com/arduino/arduino-lint-action/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/spell-check-task.yml)
 
 [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) action that uses
 [Arduino Lint](https://github.com/arduino/arduino-lint) to check for problems with [Arduino](https://www.arduino.cc/)

@@ -1,0 +1,118 @@
+# Source: https://github.com/per1234/.github/blob/main/workflow-templates/test-javascript-jest-task.md
+name: Test JavaScript
+
+on:
+  push:
+    paths:
+      - ".github/workflows/test-javascript-jest-task.ya?ml"
+      - ".github/.?codecov.ya?ml"
+      - "dev/.?codecov.ya?ml"
+      - ".?codecov.ya?ml"
+      - "**/.npmrc"
+      - "**/jest.config.[cm]?js"
+      - "**/jest.config.json"
+      - "**/jest.config.ts"
+      - "**/package.json"
+      - "**/package-lock.json"
+      - "Taskfile.ya?ml"
+      - "__tests__/testdata/**"
+      - "**/tsconfig.json"
+      - "**.[jt]sx?"
+  pull_request:
+    paths:
+      - ".github/workflows/test-javascript-jest-task.ya?ml"
+      - ".github/.?codecov.ya?ml"
+      - "dev/.?codecov.ya?ml"
+      - ".?codecov.ya?ml"
+      - "**/.npmrc"
+      - "**/jest.config.[cm]?js"
+      - "**/jest.config.json"
+      - "**/jest.config.ts"
+      - "**/package.json"
+      - "**/package-lock.json"
+      - "Taskfile.ya?ml"
+      - "__tests__/testdata/**"
+      - "**/tsconfig.json"
+      - "**.[jt]sx?"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  run-determination:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      result: ${{ steps.determination.outputs.result }}
+    steps:
+      - name: Determine if the rest of the workflow should run
+        id: determination
+        run: |
+          RELEASE_BRANCH_REGEX="refs/heads/[0-9]+.[0-9]+.x"
+          # The `create` event trigger doesn't support `branches` filters, so it's necessary to use Bash instead.
+          if [[
+            "${{ github.event_name }}" != "create" ||
+            "${{ github.ref }}" =~ $RELEASE_BRANCH_REGEX
+          ]]; then
+            # Run the other jobs.
+            RESULT="true"
+          else
+            # There is no need to run the other jobs.
+            RESULT="false"
+          fi
+
+          echo "result=$RESULT" >> $GITHUB_OUTPUT
+
+  test:
+    name: test (${{ matrix.project.path }}, ${{ matrix.operating-system }})
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
+    runs-on: ${{ matrix.operating-system }}
+    defaults:
+      run:
+        shell: bash
+    permissions:
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - path: .
+        operating-system:
+          - ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Run tests
+        run: |
+          task \
+            --silent \
+            js:test \
+            PROJECT_PATH="${{ matrix.project.path }}"
+
+      - name: Send unit tests coverage to Codecov
+        if: runner.os == 'Linux'
+        uses: codecov/codecov-action@v4
+        with:
+          # Even though the file is specified via the `file` input. The action still pointlessly searches for the file
+          # by default.
+          disable_search: true
+          fail_ci_if_error: ${{ github.repository == 'arduino/arduino-lint-action' }}
+          file: ${{ matrix.project.path }}/coverage/lcov.info
+          # If triggered by a push/PR by a human from a branch in the repo, the token from the action secret is used.
+          # If triggered by a Dependabot PR, the token from the Dependabot secret is used.
+          # If triggered by a PR from a fork, the action allows a "tokenless" upload.
+          token: ${{ secrets.CODECOV_TOKEN }}
