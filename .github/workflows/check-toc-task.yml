@@ -1,0 +1,98 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-toc-task.md
+name: Check ToC
+
+# See: https://docs.github.com/actions/using-workflows/events-that-trigger-workflows
+on:
+  create:
+  push:
+    paths:
+      - ".github/workflows/check-toc-task.ya?ml"
+      - ".npmrc"
+      - "package.json"
+      - "package-lock.json"
+      - "README.md"
+      - "Taskfile.ya?ml"
+  pull_request:
+    paths:
+      - ".github/workflows/check-toc-task.ya?ml"
+      - ".npmrc"
+      - "package.json"
+      - "package-lock.json"
+      - "README.md"
+      - "Taskfile.ya?ml"
+  schedule:
+    # Run periodically to catch breakage caused by external changes.
+    - cron: "0 3 * * WED"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  run-determination:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      result: ${{ steps.determination.outputs.result }}
+    steps:
+      - name: Determine if the rest of the workflow should run
+        id: determination
+        run: |
+          RELEASE_BRANCH_REGEX="refs/heads/[0-9]+.[0-9]+.x"
+          # The `create` event trigger doesn't support `branches` filters, so it's necessary to use Bash instead.
+          if [[
+            "${{ github.event_name }}" != "create" ||
+            "${{ github.ref }}" =~ $RELEASE_BRANCH_REGEX
+          ]]; then
+            # Run the other jobs.
+            RESULT="true"
+          else
+            # There is no need to run the other jobs.
+            RESULT="false"
+          fi
+
+          echo "result=$RESULT" >> $GITHUB_OUTPUT
+
+  check:
+    name: ${{ matrix.file.name }}
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        file:
+          - name: README.md
+            # Max ToC depth, for use with the markdown-toc --maxdepth flag.
+            maxdepth: 3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Rebuild ToC
+        run: |
+          task \
+            markdown:toc \
+              FILE_PATH="${{ github.workspace }}/${{ matrix.file.name }}" \
+              MAX_DEPTH=${{ matrix.file.maxdepth }}
+
+      - name: Check ToC
+        run: |
+          git \
+            diff \
+              --color \
+              --exit-code

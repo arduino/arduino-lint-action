@@ -20,6 +20,10 @@ tasks:
     desc: Make automated corrections to the project's files
     deps:
       - task: general:format-prettier
+      - task: markdown:toc
+        vars:
+          FILE_PATH: README.md
+          MAX_DEPTH: 3
       - task: npm:install-deps
       - task: ts:build
 
@@ -31,7 +35,25 @@ tasks:
     cmds:
       - npx prettier --write .
 
-  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/npm-task/Taskfile.yml
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-toc-task/Taskfile.yml
+  markdown:toc:
+    desc: |
+      Update the table of contents
+      Environment variable parameters:
+      FILE_PATH: Path of the file in which to update the ToC.
+      MAX_DEPTH: The maximum heading level for which to add ToC items.
+    deps:
+      - task: npm:install-deps
+    cmds:
+      - |
+        npx \
+          markdown-toc \
+            --bullets=- \
+            --maxdepth={{.MAX_DEPTH}} \
+            -i \
+            "{{.FILE_PATH}}"
+
+  # Parameter variables:
   npm:install-deps:
     desc: |
       Install dependencies managed by npm.
