@@ -13,6 +13,13 @@ The **Node.js** version in use is defined in the `engines.node` field of [`packa
 
 [nvm](https://github.com/nvm-sh/nvm) is recommended to easily switch between Node.js versions.
 
+#### Task
+
+The [**Task**](https://taskfile.dev) task runner tool is used for all common development and validation operations.
+
+Follow the installation instructions here:<br />
+https://taskfile.dev/installation/
+
 ### 2. Install dependencies
 
 To work on the codebase you have to install all the dependencies:
@@ -32,7 +39,7 @@ Make sure to write or update tests for your work when appropriate.
 Format the code to follow the standard style for the project:
 
 ```
-npm run format
+task general:format-prettier
 ```
 
 ### 5. Run tests

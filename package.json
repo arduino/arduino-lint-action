@@ -5,8 +5,6 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
     "pack": "ncc build",
     "test": "jest"
   },
