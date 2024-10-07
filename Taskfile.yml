@@ -16,6 +16,7 @@ tasks:
   check:
     desc: Check for problems with the project
     deps:
+      - task: general:check-spelling
       - task: npm:validate
       - task: ts:validate
         vars:
@@ -24,13 +25,35 @@ tasks:
   fix:
     desc: Make automated corrections to the project's files
     deps:
+      - task: general:correct-spelling
       - task: general:format-prettier
       - task: markdown:toc
         vars:
           FILE_PATH: README.md
           MAX_DEPTH: 3
       - task: npm:install-deps
+      - task: poetry:sync
       - task: ts:build
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
+  general:check-spelling:
+    desc: Check for commonly misspelled words
+    deps:
+      - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
+    cmds:
+      - poetry run codespell
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
+  general:correct-spelling:
+    desc: Correct commonly misspelled words where possible
+    deps:
+      - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
+    cmds:
+      - poetry run codespell --write-changes
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
   general:format-prettier:
@@ -149,6 +172,60 @@ tasks:
             -r "{{.SEMANTIC_RELEASE_SCHEMA_PATH}}" \
             -r "{{.STYLELINTRC_SCHEMA_PATH}}" \
             -d "{{.INSTANCE_PATH}}"
+
+  poetry:install:
+    desc: Install Poetry
+    run: once
+    vars:
+      PYTHON_PATH:
+        sh: task utility:normalize-path RAW_PATH="$(which python)"
+    cmds:
+      - |
+        if ! which pipx &>/dev/null; then
+          echo "pipx not found or not in PATH."
+          echo "Please install: https://pipx.pypa.io/stable/installation/#installing-pipx"
+          exit 1
+        fi
+      - |
+        if ! which yq &>/dev/null; then
+          echo "yq not found or not in PATH."
+          echo "Please install: https://github.com/mikefarah/yq/#install"
+          exit 1
+        fi
+      - |
+        pipx install \
+          --python "{{.PYTHON_PATH}}" \
+          "poetry==$( \
+            yq \
+              --input-format toml \
+              --output-format yaml \
+              '.tool.poetry.group.pipx.dependencies.poetry' \
+              < pyproject.toml
+          )"
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
+  poetry:install-deps:
+    desc: |
+      Install dependencies managed by Poetry.
+      Environment variable parameters:
+      POETRY_GROUPS: Poetry dependency groups to install (default: install all dependencies).
+    run: when_changed
+    deps:
+      - task: poetry:install
+    cmds:
+      - |
+        poetry install \
+          {{if .POETRY_GROUPS}} --only {{.POETRY_GROUPS}} {{end}}
+
+  poetry:sync:
+    desc: Sync poetry.lock
+    deps:
+      - task: poetry:install
+    cmds:
+      - |
+        poetry lock \
+          --no-cache \
+          --no-update
 
   ts:build:
     desc: Build the action's TypeScript code.

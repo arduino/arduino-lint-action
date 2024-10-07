@@ -13,6 +13,12 @@ The **Node.js** version in use is defined in the `engines.node` field of [`packa
 
 [nvm](https://github.com/nvm-sh/nvm) is recommended to easily switch between Node.js versions.
 
+#### Python
+
+**Python**-based tools are used for some project development operations.
+
+The **Python** version in use is defined in the `tool.poetry.dependencies` field of [`pyproject.toml`](../pyproject.toml).
+
 #### Task
 
 The [**Task**](https://taskfile.dev) task runner tool is used for all common development and validation operations.

@@ -6,7 +6,7 @@
 [![Check Prettier Formatting status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml)
 [![Check TypeScript Configuration status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig-task.yml)
 [![Check npm status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml)
-[![Spellcheck Status](https://github.com/arduino/arduino-lint-action/workflows/Spell%20Check/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Spell+Check)
+[![Spell Check status](https://github.com/arduino/arduino-lint-action/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/spell-check-task.yml)
 
 [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) action that uses
 [Arduino Lint](https://github.com/arduino/arduino-lint) to check for problems with [Arduino](https://www.arduino.cc/)
