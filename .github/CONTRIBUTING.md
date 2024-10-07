@@ -18,7 +18,7 @@ The **Node.js** version in use is defined in the `engines.node` field of [`packa
 To work on the codebase you have to install all the dependencies:
 
 ```
-npm install
+task npm:install-deps
 ```
 
 ### 3. Coding

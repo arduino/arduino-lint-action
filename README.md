@@ -4,7 +4,7 @@
 [![Integration Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Integration%20Tests/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Integration+Tests)
 [![Check Packaging status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml)
 [![Check TypeScript Configuration status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig.yml)
-[![Check npm status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm.yml)
+[![Check npm status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml)
 [![Spellcheck Status](https://github.com/arduino/arduino-lint-action/workflows/Spell%20Check/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Spell+Check)
 
 [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) action that uses
