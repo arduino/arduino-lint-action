@@ -72,6 +72,38 @@ Everything is now ready to make your contribution to the project, so commit it t
 
 Thanks!
 
+## Common Development Operations
+
+### Running Checks
+
+Checks and tests are set up to ensure the project content is functional and compliant with the established standards.
+
+You can run the full suite of checks by running the following command from a terminal in a path under the repository:
+
+```text
+task check
+```
+
+### Automatic Corrections
+
+Tools are provided to automatically bring the project into compliance with some of the required checks.
+
+You can make these automatic fixes by running the following command from a terminal in a path under the repository:
+
+```text
+task fix
+```
+
+### Other Operations
+
+Individual tasks are provided for each specific common validation and automated correction operation. The convenience `check` and `fix` tasks run all of the relevant individual tasks, so it is not necessary for the contributor to use the individual tasks. However, in some cases it may be more efficient to run the single specific task of interest.
+
+You can learn the names of all the available tasks by running the following command from a terminal in a path under the repository:
+
+```text
+task --list
+```
+
 ## Release workflow
 
 Instructions for releasing a new version of the action:
