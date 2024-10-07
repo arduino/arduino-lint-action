@@ -4,6 +4,8 @@ version: "3"
 vars:
   # Path of the primary npm-managed project:
   DEFAULT_NPM_PROJECT_PATH: ./
+  # Last version of ajv-cli with support for the JSON schema "Draft 4" specification
+  SCHEMA_DRAFT_4_AJV_CLI_VERSION: 3.3.0
 
 tasks:
   build:
@@ -15,6 +17,9 @@ tasks:
     desc: Check for problems with the project
     deps:
       - task: npm:validate
+      - task: ts:validate
+        vars:
+          TSCONFIG_PATH: "./tsconfig.json"
 
   fix:
     desc: Make automated corrections to the project's files
@@ -153,12 +158,60 @@ tasks:
       - npx tsc
       - npx ncc build
 
+  ts:validate:
+    desc: |
+      Validate TypeScript configuration file against its JSON schema
+      Environment variable parameters:
+      TSCONFIG_PATH: Path of the TypeScript configuration file (default: ./tsconfig.json).
+    vars:
+      # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/tsconfig.json
+      SCHEMA_URL: https://json.schemastore.org/tsconfig.json
+      SCHEMA_PATH:
+        sh: task utility:mktemp-file TEMPLATE="tsconfig-schema-XXXXXXXXXX.json"
+      INSTANCE_PATH: '{{default "./tsconfig.json" .TSCONFIG_PATH}}'
+      WORKING_FOLDER:
+        sh: task utility:mktemp-folder TEMPLATE="ts-validate-XXXXXXXXXX"
+      WORKING_INSTANCE_PATH:
+        sh: echo "{{.WORKING_FOLDER}}/$(basename "{{.INSTANCE_PATH}}")"
+    deps:
+      - task: npm:install-deps
+    cmds:
+      - |
+        # TypeScript allows comments in tsconfig.json.
+        # ajv-cli did not support comments in JSON at the 3.x version in use (support was added in a later version).
+        npx strip-json-comments-cli \
+          --no-whitespace \
+          "{{.INSTANCE_PATH}}" \
+          > "{{.WORKING_INSTANCE_PATH}}"
+      - |
+        wget \
+          --quiet \
+          --output-document="{{.SCHEMA_PATH}}" \
+          {{.SCHEMA_URL}}
+      - |
+        cd "{{.WORKING_FOLDER}}"  # Workaround for https://github.com/npm/cli/issues/3210
+        npx ajv-cli@{{.SCHEMA_DRAFT_4_AJV_CLI_VERSION}} validate \
+          --all-errors \
+          -s "{{.SCHEMA_PATH}}" \
+          -d "{{.WORKING_INSTANCE_PATH}}"
+
   # Make a temporary file named according to the passed TEMPLATE variable and print the path passed to stdout
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
   utility:mktemp-file:
     vars:
       RAW_PATH:
         sh: mktemp --tmpdir "{{.TEMPLATE}}"
+    cmds:
+      - task: utility:normalize-path
+        vars:
+          RAW_PATH: "{{.RAW_PATH}}"
+
+  # Make a temporary folder named according to the passed TEMPLATE variable and print the path passed to stdout
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
+  utility:mktemp-folder:
+    vars:
+      RAW_PATH:
+        sh: mktemp --directory --tmpdir "{{.TEMPLATE}}"
     cmds:
       - task: utility:normalize-path
         vars:
