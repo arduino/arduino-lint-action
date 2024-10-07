@@ -5,11 +5,13 @@ on:
   push:
     paths:
       - ".github/workflows/check-npm.ya?ml"
+      - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
   pull_request:
     paths:
       - ".github/workflows/check-npm.ya?ml"
+      - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
   schedule:
