@@ -1,9 +1,5 @@
 name: Check npm
 
-env:
-  # See: https://github.com/actions/setup-node/#readme
-  NODE_VERSION: 20.x
-
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
@@ -162,7 +158,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: package.json
 
       - name: Install dependencies
         run: npm install
