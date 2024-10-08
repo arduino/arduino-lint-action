@@ -124,7 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: arduino/arduino-lint-action@v1
+      - uses: arduino/arduino-lint-action@v2
 ```
 
 A more complex workflow which uses [inputs](#inputs) to configure the action for Library Manager ["update" mode](#library-manager) and strict compliance:
@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: arduino/arduino-lint-action@v1
+      - uses: arduino/arduino-lint-action@v2
         with:
           library-manager: update
           compliance: strict
