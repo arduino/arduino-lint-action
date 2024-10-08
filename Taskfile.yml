@@ -36,6 +36,33 @@ tasks:
       - task: poetry:sync
       - task: ts:build
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-dependencies-task/Taskfile.yml
+  general:cache-dep-licenses:
+    desc: Cache dependency license metadata
+    deps:
+      - task: general:prepare-deps
+    cmds:
+      - |
+        if ! which licensed &>/dev/null; then
+          if [[ {{OS}} == "windows" ]]; then
+            echo "Licensed does not have Windows support."
+            echo "Please use Linux/macOS or download the dependencies cache from the GitHub Actions workflow artifact."
+          else
+            echo "licensed not found or not in PATH."
+            echo "Please install: https://github.com/github/licensed#as-an-executable"
+          fi
+          exit 1
+        fi
+      - licensed cache
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-dependencies-task/Taskfile.yml
+  general:check-dep-licenses:
+    desc: Check for unapproved dependency licenses
+    deps:
+      - task: general:cache-dep-licenses
+    cmds:
+      - licensed status
+
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
   general:check-spelling:
     desc: Check for commonly misspelled words
@@ -63,6 +90,12 @@ tasks:
       - task: npm:install-deps
     cmds:
       - npx prettier --write .
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-npm-dependencies-task/Taskfile.yml
+  general:prepare-deps:
+    desc: Prepare project dependencies for license check
+    deps:
+      - task: npm:install-deps
 
   js:test:
     desc: |

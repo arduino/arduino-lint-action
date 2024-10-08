@@ -74,6 +74,20 @@ Thanks!
 
 ## Common Development Operations
 
+### Dependency License Metadata
+
+Metadata about the license types of all dependencies is cached in the repository. To update this cache, run the following command from the repository root folder:
+
+```text
+task general:cache-dep-licenses
+```
+
+The necessary **Licensed** tool can be installed by following [these instructions](https://github.com/github/licensed#as-an-executable).
+
+Unfortunately, **Licensed** does not have Windows support.
+
+An updated cache is also generated whenever the cache is found to be outdated by the "**Check Go Dependencies**" CI workflow and made available for download via the `dep-licenses-cache` [workflow artifact](https://docs.github.com/actions/managing-workflow-runs/downloading-workflow-artifacts).
+
 ### Running Checks
 
 Checks and tests are set up to ensure the project content is functional and compliant with the established standards.
