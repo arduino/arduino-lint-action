@@ -28,7 +28,7 @@
     "@vercel/ncc": "^0.38.3",
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^3.0.1",
-    "github-label-sync": "2.3.1",
+    "github-label-sync": "3.0.0",
     "jest": "^29.7.0",
     "jest-circus": "^29.7.0",
     "markdown-toc": "^1.2.0",
