@@ -29,7 +29,7 @@
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^3.0.1",
     "github-label-sync": "3.0.0",
-    "jest": "^30.0.2",
+    "jest": "^30.0.3",
     "jest-circus": "^30.0.0",
     "markdown-toc": "^1.2.0",
     "nock": "^13.5.6",
