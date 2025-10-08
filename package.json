@@ -18,7 +18,7 @@
     "@actions/core": "^1.11.1",
     "@actions/http-client": "^2.2.3",
     "@actions/tool-cache": "^2.0.2",
-    "semver": "^7.7.2"
+    "semver": "^7.7.3"
   },
   "devDependencies": {
     "@actions/io": "^1.1.3",
