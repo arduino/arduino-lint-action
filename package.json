@@ -33,7 +33,7 @@
     "jest-circus": "^30.0.0",
     "markdown-toc": "^1.2.0",
     "nock": "^13.5.6",
-    "prettier": "^3.7.3",
+    "prettier": "^3.7.4",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   },
