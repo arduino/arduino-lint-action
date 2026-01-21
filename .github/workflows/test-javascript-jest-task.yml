@@ -105,7 +105,7 @@ jobs:
 
       - name: Send unit tests coverage to Codecov
         if: runner.os == 'Linux'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           # Even though the file is specified via the `file` input. The action still pointlessly searches for the file
           # by default.
