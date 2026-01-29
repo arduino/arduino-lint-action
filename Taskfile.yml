@@ -139,7 +139,7 @@ tasks:
       Environment variable parameters:
       PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
     dir: |
-      "{{default "./" .PROJECT_PATH}}"
+      "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
     cmds:
       - npm install
 
