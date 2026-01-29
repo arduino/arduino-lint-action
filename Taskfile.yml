@@ -104,8 +104,7 @@ tasks:
       PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
     deps:
       - task: npm:install-deps
-    dir: |
-      "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
+    dir: "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
     cmds:
       # See: https://jestjs.io/docs/ecmascript-modules#:~:text=Execute%20node%20with%20%2D%2Dexperimental%2Dvm%2Dmodules
       - |
@@ -138,8 +137,7 @@ tasks:
       Install dependencies managed by npm.
       Environment variable parameters:
       PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
-    dir: |
-      "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
+    dir: "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
     cmds:
       - npm install
 
