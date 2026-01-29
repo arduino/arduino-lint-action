@@ -15,7 +15,7 @@
 */
 
 import core = require("@actions/core");
-import io = require("@actions/io");
+import * as io from "@actions/io";
 import path = require("path");
 import os = require("os");
 import fs = require("fs");
