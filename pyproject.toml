@@ -14,7 +14,7 @@ codespell = "2.3.0"
 optional = true
 
 [tool.poetry.group.pipx.dependencies]
-poetry = "2.3.3"
+poetry = "2.3.4"
 
 [build-system]
 requires = ["poetry-core"]

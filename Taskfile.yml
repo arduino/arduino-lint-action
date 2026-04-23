@@ -273,8 +273,7 @@ tasks:
     cmds:
       - |
         poetry lock \
-          --no-cache \
-          --no-update
+          --no-cache
 
   ts:build:
     desc: Build the action's TypeScript code.
