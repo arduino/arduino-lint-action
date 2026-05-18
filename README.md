@@ -1,11 +1,14 @@
 # `arduino/arduino-lint-action`
 
-[![Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Test%20Action/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Test+Action)
+[![Tests Status](https://github.com/arduino/arduino-lint-action/actions/workflows/test-javascript-jest-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/test-javascript-jest-task.yml)
 [![Integration Tests Status](https://github.com/arduino/arduino-lint-action/workflows/Integration%20Tests/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Integration+Tests)
+[![Check License status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-license.yml)
+[![Check npm Dependencies status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-dependencies-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-dependencies-task.yml)
 [![Check Packaging status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-packaging-ncc-typescript-npm.yml)
-[![Check TypeScript Configuration status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig.yml)
-[![Check npm status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm.yml)
-[![Spellcheck Status](https://github.com/arduino/arduino-lint-action/workflows/Spell%20Check/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Spell+Check)
+[![Check Prettier Formatting status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-prettier-formatting-task.yml)
+[![Check TypeScript Configuration status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-tsconfig-task.yml)
+[![Check npm status](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/check-npm-task.yml)
+[![Spell Check status](https://github.com/arduino/arduino-lint-action/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions/workflows/spell-check-task.yml)
 
 [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) action that uses
 [Arduino Lint](https://github.com/arduino/arduino-lint) to check for problems with [Arduino](https://www.arduino.cc/)
@@ -122,7 +125,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: arduino/arduino-lint-action@v1
+      - uses: arduino/arduino-lint-action@v2
 ```
 
 A more complex workflow which uses [inputs](#inputs) to configure the action for Library Manager ["update" mode](#library-manager) and strict compliance:
@@ -135,7 +138,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: arduino/arduino-lint-action@v1
+      - uses: arduino/arduino-lint-action@v2
         with:
           library-manager: update
           compliance: strict
