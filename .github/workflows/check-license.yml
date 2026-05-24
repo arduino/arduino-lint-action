@@ -5,6 +5,8 @@ name: Check License
 on:
   create:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/check-license.ya?ml"
       # See: https://github.com/licensee/licensee/blob/master/docs/what-we-look-at.md#detecting-the-license-file

@@ -5,6 +5,8 @@ name: Check npm Dependencies
 on:
   create:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/check-npm-dependencies-task.ya?ml"
       - ".licenses/**"

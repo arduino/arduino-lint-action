@@ -3,6 +3,8 @@ name: Check TypeScript Configuration
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/check-tsconfig-task.ya?ml"
       - "**/tsconfig*.json"

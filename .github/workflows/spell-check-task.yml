@@ -5,6 +5,8 @@ name: Spell Check
 on:
   create:
   push:
+    branches:
+      - main
   pull_request:
   schedule:
     # Run every Tuesday at 8 AM UTC to catch new misspelling detections resulting from dictionary updates.

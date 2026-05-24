@@ -3,6 +3,8 @@ name: Integration Tests
 on:
   pull_request:
   push:
+    branches:
+      - main
   schedule: # Scheduled trigger checks for breakage caused by changes to arduino-lint
     # run every Tuesday at 3 AM UTC
     - cron: "0 3 * * 2"

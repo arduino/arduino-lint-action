@@ -5,6 +5,8 @@ name: Check Prettier Formatting
 on:
   create:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/check-prettier-formatting-task.ya?ml"
       - "Taskfile.ya?ml"

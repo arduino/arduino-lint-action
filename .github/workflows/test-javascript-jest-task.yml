@@ -3,6 +3,8 @@ name: Test JavaScript
 
 on:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/test-javascript-jest-task.ya?ml"
       - ".github/.?codecov.ya?ml"
