@@ -14,31 +14,46 @@
   limitations under the License.
 */
 
-import core = require("@actions/core");
-import io = require("@actions/io");
-import path = require("path");
-import os = require("os");
-import fs = require("fs");
-import nock = require("nock");
+import * as io from "@actions/io";
+import * as path from "path";
+import * as os from "os";
+import * as fs from "fs";
+import nock from "nock";
+import { jest } from "@jest/globals";
 
-const toolDir = path.join(__dirname, "runner", "tools");
-const tempDir = path.join(__dirname, "runner", "temp");
-const dataDir = path.join(__dirname, "testdata");
-const IS_WINDOWS = process.platform === "win32";
+/*
+  Set up to mock `getInput` function of @actions/core.
+  See: https://jestjs.io/docs/ecmascript-modules#module-mocking-in-esm
+*/
+// Import actual module to preserve original implementations in the mock.
+const actualCore = await import("@actions/core");
+jest.unstable_mockModule("@actions/core", () => ({
+  ...actualCore,
+  getInput: jest.fn(),
+}));
 
-process.env["RUNNER_TEMP"] = tempDir;
-process.env["RUNNER_TOOL_CACHE"] = toolDir;
-import * as installer from "../src/installer";
+const core = await import("@actions/core");
 
 // Inputs for mock @actions/core
 let inputs = {
   token: process.env.GITHUB_TOKEN || "",
 } as any;
 
+const testDir = import.meta.dirname;
+const toolDir = path.join(testDir, "runner", "tools");
+const tempDir = path.join(testDir, "runner", "temp");
+const dataDir = path.join(testDir, "testdata");
+const IS_WINDOWS = process.platform === "win32";
+
+process.env["RUNNER_TEMP"] = tempDir;
+process.env["RUNNER_TOOL_CACHE"] = toolDir;
+// Dynamic import must be used to apply the @actions/core mock.
+const installer = await import("../src/installer.ts");
+
 describe("installer tests", () => {
   beforeEach(async function () {
     // Mock getInput
-    jest.spyOn(core, "getInput").mockImplementation((name: string) => {
+    (core.getInput as jest.Mock).mockImplementation((name: string) => {
       return inputs[name];
     });
 
@@ -74,7 +89,7 @@ describe("installer tests", () => {
 
   describe("Gets the latest release of arduino-lint", () => {
     beforeEach(() => {
-      jest.spyOn(core, "getInput").mockImplementation((name: string) => {
+      (core.getInput as jest.Mock).mockImplementation((name: string) => {
         return inputs[name];
       });
 
