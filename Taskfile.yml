@@ -170,6 +170,10 @@ tasks:
       JSCPD_SCHEMA_URL: https://json.schemastore.org/jscpd.json
       JSCPD_SCHEMA_PATH:
         sh: task utility:mktemp-file TEMPLATE="jscpd-schema-XXXXXXXXXX.json"
+      # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/madge.json
+      MADGE_SCHEMA_URL: https://json.schemastore.org/madge.json
+      MADGE_SCHEMA_PATH:
+        sh: task utility:mktemp-file TEMPLATE="madge-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/nodemon.json
       NODEMON_SCHEMA_URL: https://json.schemastore.org/nodemon.json
       NODEMON_SCHEMA_PATH:
@@ -206,6 +210,7 @@ tasks:
       - wget --quiet --output-document="{{.BASE_SCHEMA_PATH}}" {{.BASE_SCHEMA_URL}}
       - wget --quiet --output-document="{{.ESLINTRC_SCHEMA_PATH}}" {{.ESLINTRC_SCHEMA_URL}}
       - wget --quiet --output-document="{{.JSCPD_SCHEMA_PATH}}" {{.JSCPD_SCHEMA_URL}}
+      - wget --quiet --output-document="{{.MADGE_SCHEMA_PATH}}" {{.MADGE_SCHEMA_URL}}
       - wget --quiet --output-document="{{.NODEMON_SCHEMA_PATH}}" {{.NODEMON_SCHEMA_URL}}
       - wget --quiet --output-document="{{.NPM_BADGES_SCHEMA_PATH}}" {{.NPM_BADGES_SCHEMA_URL}}
       - wget --quiet --output-document="{{.PARTIAL_ESLINT_PLUGINS_PATH}}" {{.PARTIAL_ESLINT_PLUGINS_SCHEMA_URL}}
@@ -225,6 +230,7 @@ tasks:
             -r "{{.BASE_SCHEMA_PATH}}" \
             -r "{{.ESLINTRC_SCHEMA_PATH}}" \
             -r "{{.JSCPD_SCHEMA_PATH}}" \
+            -r "{{.MADGE_SCHEMA_PATH}}" \
             -r "{{.NODEMON_SCHEMA_PATH}}" \
             -r "{{.NPM_BADGES_SCHEMA_PATH}}" \
             -r "{{.PARTIAL_ESLINT_PLUGINS_PATH}}" \
