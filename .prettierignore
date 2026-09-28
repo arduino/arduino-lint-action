@@ -1,5 +1,6 @@
 .licenses/
 __pycache__/
+/.build/
 /dist/
 /lib/
 node_modules/
