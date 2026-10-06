@@ -415,7 +415,7 @@ version = "1.2.9"
 description = "Python Git Library"
 optional = false
 python-versions = ">=3.10"
-groups = ["dev", "pipx"]
+groups = ["pipx"]
 files = [
     {file = "dulwich-1.2.9-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:90c79e0fe54f63f6b56aacc9b5fdfd20771810607a1dc18fa2a78754bf6abade"},
     {file = "dulwich-1.2.9-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:9dcae6b21ca4ddafe30f79caf3fdb3137214886cc09e6bf1e67e9f5bb61e8206"},
@@ -1160,14 +1160,14 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "2.7.0"
+version = "2.8.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev", "pipx"]
 files = [
-    {file = "urllib3-2.7.0-py3-none-any.whl", hash = "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897"},
-    {file = "urllib3-2.7.0.tar.gz", hash = "sha256:231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c"},
+    {file = "urllib3-2.8.0-py3-none-any.whl", hash = "sha256:0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3"},
+    {file = "urllib3-2.8.0.tar.gz", hash = "sha256:63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"},
 ]
 
 [package.extras]
