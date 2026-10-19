@@ -34,7 +34,7 @@
     "markdown-toc": "^1.2.0",
     "nock": "^15.0.1",
     "prettier": "^3.9.10",
-    "ts-jest": "^29.4.14",
+    "ts-jest": "^29.4.15",
     "typescript": "^6.0.3"
   },
   "engines": {
