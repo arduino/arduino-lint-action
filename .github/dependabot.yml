@@ -30,3 +30,12 @@ updates:
         # So we only want automated updates for minor and patch releases of this dependency.
         update-types:
           - "version-update:semver-major"
+  - package-ecosystem: pip
+    directory: /
+    assignees:
+      - per1234
+    labels:
+      - "topic: infrastructure"
+    open-pull-requests-limit: 100
+    schedule:
+      interval: daily
