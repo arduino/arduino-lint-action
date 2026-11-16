@@ -24,7 +24,6 @@ updates:
       interval: daily
     labels:
       - "topic: dependencies"
-      - "topic: infrastructure"
     ignore:
       - dependency-name: "@types/node"
         # @types/node should be kept in sync with the major version of Node.js that is in use.
