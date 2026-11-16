@@ -35,6 +35,7 @@ updates:
     assignees:
       - per1234
     labels:
+      - "topic: dependencies"
       - "topic: infrastructure"
     open-pull-requests-limit: 100
     schedule:
